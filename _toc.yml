@@ -4,6 +4,7 @@ chapters:
   - file: lecture_16_example
 
   - title: Projects
+    file: Projects/index
     sections:
       - title: "Project 1 — Bicycle Counts Analysis"
         file: Projects/Project_1/Project1
