@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Project 2: NYC Restaurant Inspections vs. Complaints &#8212; Alexander Bitterman&#39;s Portfolio</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Projects/Project_2/Project_2';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.7/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Project 1" href="../Project_1/Project1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Alexander Bitterman's Portfolio</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Alex’s Portfolio
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../lecture_16_example.html">Lecture 16 Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Project_1/Project1.html">Project 1 — Bicycle Counts Analysis</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Project 2 - Restaurant Inspections vs. 311 Complaints</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/Projects/Project_2/Project_2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Project 2: NYC Restaurant Inspections vs. Complaints</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="project-2-nyc-restaurant-inspections-vs-complaints">
+<h1>Project 2: NYC Restaurant Inspections vs. Complaints<a class="headerlink" href="#project-2-nyc-restaurant-inspections-vs-complaints" title="Link to this heading">#</a></h1>
+<p>This project explores the relationship between restaurant inspections per month and complaints, particularly about food establishments.
+311 dataset: <a class="reference external" href="https://data.cityofnewyork.us/d/erm2-nwe9">https://data.cityofnewyork.us/d/erm2-nwe9</a>
+Inspections dataset: <a class="reference external" href="https://data.cityofnewyork.us/d/43nn-pn8j">https://data.cityofnewyork.us/d/43nn-pn8j</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">inspections_url</span> <span class="o">=</span> <span class="s2">&quot;https://data.cityofnewyork.us/resource/43nn-pn8j.csv?$select=camis,boro,inspection_date&amp;$where=inspection_date%20&gt;=%20&#39;2019-01-01&#39;&amp;$limit=300000&quot;</span>
+
+<span class="n">df_inspections</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">inspections_url</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;inspection_date&quot;</span><span class="p">])</span>
+<span class="n">df_inspections</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>camis</th>
+      <th>boro</th>
+      <th>inspection_date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>50075461</td>
+      <td>Manhattan</td>
+      <td>2024-04-30</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>41668282</td>
+      <td>Manhattan</td>
+      <td>2025-07-17</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>50066463</td>
+      <td>Manhattan</td>
+      <td>2022-04-18</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>50129114</td>
+      <td>Queens</td>
+      <td>2023-08-11</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>50049514</td>
+      <td>Queens</td>
+      <td>2021-09-03</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>First, I used an API call to access the restaurant inspection data, with only necessary columns. I asked ChatGPT (I was having trouble figuring out selecting the columns we needed) to help me figure out how to filter for only the three columns I needed: unique code, Boro (just in case, although ultimately I decided to aggregate citywide), and Inspection Date. I also filtered to only inspections on 1/1/2024 or later, and will do the same for the 311 dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">complaints_url</span> <span class="o">=</span> <span class="s2">&quot;https://data.cityofnewyork.us/resource/erm2-nwe9.csv?$select=created_date,complaint_type,descriptor,location_type,borough&amp;$where=(complaint_type=&#39;Rodent&#39;%20OR</span><span class="si">%20u</span><span class="s2">pper(descriptor)</span><span class="si">%20li</span><span class="s2">ke%20&#39;%25RODENT%25&#39;)%20AND</span><span class="si">%20u</span><span class="s2">pper(location_type)</span><span class="si">%20li</span><span class="s2">ke%20&#39;%25RESTAURANT%25&#39;%20AND</span><span class="si">%20c</span><span class="s2">reated_date&gt;=&#39;2019-01-01T00:00:00&#39;&amp;$limit=50000&quot;</span>
+
+<span class="n">df_complaints</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">complaints_url</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;created_date&quot;</span><span class="p">])</span>
+<span class="n">df_complaints</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>created_date</th>
+      <th>complaint_type</th>
+      <th>descriptor</th>
+      <th>location_type</th>
+      <th>borough</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-11-23 22:50:49</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-11-23 21:50:19</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-11-23 21:31:24</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-11-23 20:58:37</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>BROOKLYN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-11-23 20:23:56</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>QUEENS</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>I accessed the 311 dataset, again asking ChatGPT to help me filter for the relevant Complaint Type (Rodent) and location type (Restaurant/Bar/Deli/Bakery), as well as the date and borough. I used the data dictionary for the dataset to find the relevant complaint type, descriptors, and location type.
+For both datasets, I used parse_dates to turn the dates into proper date formats to then easily aggregate them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_inspections</span><span class="p">[</span><span class="s2">&quot;inspection_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+    <span class="n">df_inspections</span><span class="p">[</span><span class="s2">&quot;inspection_date&quot;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span>
+<span class="p">)</span>
+<span class="n">df_complaints</span><span class="p">[</span><span class="s2">&quot;created_date&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+    <span class="n">df_complaints</span><span class="p">[</span><span class="s2">&quot;created_date&quot;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y&quot;</span>
+<span class="p">)</span>
+<span class="n">df_complaints</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>created_date</th>
+      <th>complaint_type</th>
+      <th>descriptor</th>
+      <th>location_type</th>
+      <th>borough</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2025-11-23 22:50:49</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+      <td>2025-11-23 22:50:49</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2025-11-23 21:50:19</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+      <td>2025-11-23 21:50:19</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2025-11-23 21:31:24</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>MANHATTAN</td>
+      <td>2025-11-23 21:31:24</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2025-11-23 20:58:37</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>BROOKLYN</td>
+      <td>2025-11-23 20:58:37</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2025-11-23 20:23:56</td>
+      <td>Food Establishment</td>
+      <td>Rodents/Insects/Garbage</td>
+      <td>Restaurant/Bar/Deli/Bakery</td>
+      <td>QUEENS</td>
+      <td>2025-11-23 20:23:56</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_inspections</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_inspections</span><span class="p">[</span><span class="s2">&quot;inspection_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">)</span>
+<span class="n">df_complaints</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_complaints</span><span class="p">[</span><span class="s2">&quot;created_date&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">to_period</span><span class="p">(</span><span class="s2">&quot;M&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, I used datetime to make sure that both df’s have dates in the correct format (probably redundant after using parse_dates). Following this, I used to_period to create a month column in both datasets (from the month in the existing dates).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspections_monthly</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_inspections</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;month&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;inspection_count&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">complaints_monthly</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_complaints</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">&quot;month&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;complaint_count&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>I then used .groupby to aggregate both datasets to monthly counts (along with .size and .reset_index), as we’ve seen repeatedly in class. Both datasets are now ready for visualizations or merging. I can run head.() to check.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">complaints_monthly</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>month</th>
+      <th>complaint_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-01</td>
+      <td>192</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-02</td>
+      <td>159</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-03</td>
+      <td>187</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-04</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-05</td>
+      <td>231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inspections_monthly</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>month</th>
+      <th>inspection_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-01</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-02</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-03</td>
+      <td>88</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-04</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-05</td>
+      <td>110</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">monthly_merged</span> <span class="o">=</span> <span class="n">inspections_monthly</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">complaints_monthly</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+<span class="n">monthly_merged</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>month</th>
+      <th>inspection_count</th>
+      <th>complaint_count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2019-01</td>
+      <td>28</td>
+      <td>192</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2019-02</td>
+      <td>43</td>
+      <td>159</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2019-03</td>
+      <td>88</td>
+      <td>187</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2019-04</td>
+      <td>39</td>
+      <td>188</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2019-05</td>
+      <td>110</td>
+      <td>231</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Next I used .merge to merge the two datasets on the month, so the new dataset should have a month column and a column each for inspection count and complaint count.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+
+<span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">monthly_merged</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;inspection_count&quot;</span><span class="p">,</span> <span class="s2">&quot;complaint_count&quot;</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;NYC Restaurant Inspections vs. Rodent-Related Restaurant 311 Complaints (Monthly 2019-2025)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">xaxis_title</span><span class="o">=</span><span class="s2">&quot;Month&quot;</span><span class="p">,</span> <span class="n">yaxis_title</span><span class="o">=</span><span class="s2">&quot;Count&quot;</span><span class="p">,</span> <span class="n">legend_title</span><span class="o">=</span><span class="s2">&quot;Series&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>Okay, this plot isn’t useful, as counts for restaurant inspections are much higher than counts for rodent complaints. I asked ChatGPT how to create a dual y-axis plot, which should allow us to better see the relative trends in both. That seemed too complicated, though, so I decided to just create another column by dividing inspections by 10, to scale it appropriately. Here, I asked ChatGPT how to label the axes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
+
+<span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;inspection_count_scaled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;inspection_count&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="n">monthly_merged</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;month&quot;</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;inspection_count_scaled&quot;</span><span class="p">,</span> <span class="s2">&quot;complaint_count&quot;</span><span class="p">],</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;month&quot;</span><span class="p">:</span> <span class="s2">&quot;Month&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Count: (Inspections (10s) vs. Complaints)&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;variable&quot;</span><span class="p">:</span> <span class="s2">&quot;Series&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;NYC Restaurant Inspections (10s) vs Rodent-Related Restaurant 311 Complaints (Monthly 2019-2025)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+</div>
+</div>
+<p>This is much better, but ultimately, there is so much noise that this plot is of limited usefulness, at least in an explanatory sense. I could rerun the whole script starting in 2021, to get rid of the first two years where complaints are quite steady and inspections are close to 0 (probably a data entry omission). It is interesting that as inspections increase in 2022, so do complaints, before leveling off. There are also clear seasonal patterns to complaints, spiking in the summer, while inspections are less clear. There are potentially other, more complex avenues to explore here, but for now, we can say that there is no clear relationship between restaurant inspections per month and rodent-related 311 complaints about restaurants.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Projects/Project_2"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Project_1/Project1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Project 1</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Alexander Bitterman
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
