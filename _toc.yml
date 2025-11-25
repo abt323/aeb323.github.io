@@ -8,3 +8,5 @@ chapters:
     sections:
       - title: "Project 1 — Bicycle Counts Analysis"
         file: Projects/Project_1/Project1
+      - title: "Project 2 - Restaurant Inspections vs. 311 Complaints"
+        file: Projects/Project_2/Project_2
