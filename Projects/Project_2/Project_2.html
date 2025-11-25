@@ -830,6 +830,48 @@ For both datasets, I used parse_dates to turn the dates into proper date formats
 </div>
 </div>
 <p>This is much better, but ultimately, there is so much noise that this plot is of limited usefulness, at least in an explanatory sense. I could rerun the whole script starting in 2021, to get rid of the first two years where complaints are quite steady and inspections are close to 0 (probably a data entry omission). It is interesting that as inspections increase in 2022, so do complaints, before leveling off. There are also clear seasonal patterns to complaints, spiking in the summer, while inspections are less clear. There are potentially other, more complex avenues to explore here, but for now, we can say that there is no clear relationship between restaurant inspections per month and rodent-related 311 complaints about restaurants.</p>
+<p>I spent about three hours trying to first get this project to publish properly on the site, and then getting these plotly plots to show, but was unable to do so. As I understand it, plotly and Github do not always play nicely, and a static plot is much simpler. It would be nice if you taught us this kind of thing, instead of not even properly teaching us how to set up our repositories and publish our projects. Anyway, after these hours of trying, I had ChatGPT replicate these plots using matplotlib to create a static plot that will hopefully show up on the site.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.dates</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mdates</span>
+
+<span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month_ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;-01&quot;</span>
+<span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month_ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month_ts&quot;</span><span class="p">])</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month_ts&quot;</span><span class="p">],</span>
+    <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;inspection_count_scaled&quot;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Inspections (in 10s)&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;month_ts&quot;</span><span class="p">],</span>
+    <span class="n">monthly_merged</span><span class="p">[</span><span class="s2">&quot;complaint_count&quot;</span><span class="p">],</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Rodent Complaints&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span>
+    <span class="s2">&quot;NYC Restaurant Inspections vs 311 Restaurant Rodent Complaints, Monthly (2019-2025)&quot;</span>
+<span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Count&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Year&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">YearLocator</span><span class="p">())</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s2">&quot;%Y&quot;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/4288b0eef509bb4d37f9eecd50f1958e7959e94d324d1b30d01be409af9d3364.png" src="../../_images/4288b0eef509bb4d37f9eecd50f1958e7959e94d324d1b30d01be409af9d3364.png" />
+</div>
+</div>
 </section>
 
     <script type="text/x-thebe-config">
