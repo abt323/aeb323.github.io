@@ -10,3 +10,5 @@ chapters:
         file: Projects/Project_1/Project1
       - title: "Project 2 - Restaurant Inspections vs. 311 Complaints"
         file: Projects/Project_2/Project_2
+      - title: "Project 3 - NYPD Arrest Patterns"
+        file: Projects/Project_3/Project_3
